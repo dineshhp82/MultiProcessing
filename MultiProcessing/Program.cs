@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiProcessing.Basic;
+using System;
 
 namespace MultiProcessing
 {
@@ -6,7 +7,11 @@ namespace MultiProcessing
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Threading");
+
+            TheadingBasicDemo.Demo();
+
+            Console.Read();
         }
     }
 }
