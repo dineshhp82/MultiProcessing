@@ -13,13 +13,14 @@
   <li>Each thread has a Name property that you can set for the benefit of debugging</li>
 <ul>
 <h3>Foreground and Background Thread:</h3>
-<p>	By default, threads you create explicitly are foreground threads. Foreground threads keep the application alive for as long as any one of them is running, whereas background threads do not. Once all foreground threads finish, the application ends, and any background threads still running abruptly terminate.
-	worker.IsBackground = true;
-	Background:
-	· Background thread is also called Daemon Thread.
-	· These threads are less priority threads.
-	· CLR will not wait for these threads to finish their execution.
-	· These threads are used to perform some background tasks like garbage collection and house-keeping tasks.
-	· Main thread also created as Background thread.
+<p>By default, threads you create explicitly are foreground threads. Foreground threads keep the application alive for as long as any one of them is running, whereas background threads do not. Once all foreground threads finish, the application ends, and any background threads still running abruptly terminate.
+	<h2>Background:<h2>
+    <ul>
+	<li> Background thread is also called Daemon Thread.</li>
+	<li> These threads are less priority threads.</li>
+	<li> CLR will not wait for these threads to finish their execution.</li>
+	<li> These threads are used to perform some background tasks like garbage collection and house-keeping tasks.</li>
+	<li> Main thread also created as Background thread.</li>
+    </ul>
 </p>
 </html>
