@@ -20,8 +20,9 @@
   <li>Each thread has a Name property that you can set for the benefit of debugging</li>
 <ul>
 <h3>Foreground and Background Thread:</h3>
-<p>By default, threads you create explicitly are foreground threads. Foreground threads keep the application alive for as long as any one of them is running, whereas background threads do not. Once all foreground threads finish, the application ends, and any background threads still running abruptly terminate.
-	<h4>Background:<h4>
+<p>By default, threads you create explicitly are foreground threads. Foreground threads keep the application alive for as long as any one of them is running, whereas background threads do not. Once all foreground threads finish, 
+  the application ends, and any background threads still running abruptly terminate.</p>
+	<h4>Background:</h4>
     <ul>
 	    <li> Background thread is also called Daemon Thread.</li>
 	    <li> These threads are less priority threads.</li>
@@ -29,7 +30,6 @@
 	    <li> These threads are used to perform some background tasks like garbage collection and house-keeping tasks.</li>
 	    <li> Main thread also created as Background thread.</li>
     </ul>
-</p>
 </div>
 </body>
 </html>
