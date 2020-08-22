@@ -3,9 +3,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
 </head>
 <body>
+<div>
 <h3>Threading Basic</h3>
 <ul>
   <li>Once thread ended, a thread cannot restart.</li>
@@ -30,5 +30,6 @@
 	    <li> Main thread also created as Background thread.</li>
     </ul>
 </p>
+</div>
 </body>
 </html>
