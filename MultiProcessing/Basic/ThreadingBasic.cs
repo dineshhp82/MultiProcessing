@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
@@ -139,11 +140,181 @@ namespace MultiProcessing.Basic
         }
 
         //Thread exception
+        //when no try catch  => application crash 
+        public void UnhandledExceptionOccureInThread()
+        {
+            void Work()
+            {
+                int a = 0;
+                int b = 10;
+                int c = b / a;
+            }
+
+            Thread thWorker = new Thread(Work);
+            thWorker.Start();
+
+            for (int i = 0; i < 100; i++)
+            {
+                Thread.Sleep(i * 2);
+                Console.WriteLine("Main thread is running" + i);
+            }
+        }
+
+        //Display error message and application is not crash
+        //Error is catch because catch block in worker thread where 
+        // error occure.
+        public void HandleExceptionOccureInThread()
+        {
+            void Work()
+            {
+                try
+                {
+                    int a = 0;
+                    int b = 10;
+                    int c = b / a;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+
+            Thread thWorker = new Thread(Work);
+            thWorker.Start();
+
+            for (int i = 0; i < 100; i++)
+            {
+                Thread.Sleep(i * 2);
+                Console.WriteLine("Main thread is running" + i);
+            }
+
+        }
+
+        //Application crash and unhandled exception
+        // becuase you try to catch the exception in main thread and expection occure
+        // at  worker thread.
+        public void HandleExceptionInThread()
+        {
+            void Work()
+            {
+                int a = 0;
+                int b = 10;
+                int c = b / a;
+            }
+
+            try
+            {
+                Thread thWorker = new Thread(Work);
+                thWorker.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            for (int i = 0; i < 100; i++)
+            {
+                Thread.Sleep(i * 2);
+                Console.WriteLine("Main thread is running" + i);
+            }
+        }
+
+        //Closure  : related to scope 
+        //Whenever we've a fn defined inside another fn, the inner fn has access to the variable 
+        //declared in the outer fn
+
+        //Side effect of Closure : each time thread number result diff b'casuse i used by all thread
+
+        public void ClosureInThread()
+        {
+            void Work(int threadNumber)
+            {
+                Console.WriteLine("Thread Number" + threadNumber);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                Thread th = new Thread(() => Work(i));
+                th.Start();
+            }
+
+            Console.WriteLine("Main Thread say: Hi");
+        }
+
+        public void RidOfClosureInThread()
+        {
+            void Work(int threadNumber)
+            {
+                Console.WriteLine("Thread Number" + threadNumber);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                //create variable closure to get rid off now create separate i value for eacj
+                int index = i;
+                Thread th = new Thread(() => Work(index));
+                th.Start();
+            }
+
+            Console.WriteLine("Main Thread say: Hi");
+        }
+
+        //For debugging
+        public void ThreadName()
+        {
+            void Work(int threadindex)
+            {
+                try
+                {
+                    if (threadindex > 5)
+                    {
+                        throw new Exception("Value no expacted");
+                    }
+
+                    Console.WriteLine(threadindex);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    Console.WriteLine(Thread.CurrentThread.Name);
+                }
+            }
 
 
+            for (int i = 0; i < 8; i++)
+            {
+                int temp = i;
+                Thread th = new Thread(() => Work(temp));
+                th.Name = "Thread" + temp;
+                th.Start();
+            }
+
+            Console.WriteLine("Main Thread say: Hi");
+        }
+
+        //By default all thread are forground
+        //But can create background (daemon thread)
+        //main thread can be background thead
+
+        //Forground thread make the application alive as long as run while background thread does not.
+        //Once all the foreground threads finish the app is end any background thread running is terminated
+
+        //background priority is low.
+        //background task like GC.
+        public void BackgroundThread()
+        {
+            Thread thBack = new Thread(() => { Console.WriteLine("Hi I'm background"); });
+            thBack.IsBackground = true;
+            thBack.Start();
+
+            Console.WriteLine("I'm main thread and forground thread");
+            Thread.CurrentThread.IsBackground = true;
+            Console.WriteLine("Thread name :" + Thread.CurrentThread.Name);
+            Console.WriteLine("Main thread is background :" + Thread.CurrentThread.IsBackground);
+        }
 
     }
-
     public class TheadingBasicDemo
     {
         public static void Demo()
@@ -154,7 +325,8 @@ namespace MultiProcessing.Basic
             //threadingBasic.ThreadMultipleParam();
 
             //threadingBasic.CheckThreadMemory();
-            threadingBasic.ShareVariable();
+            //threadingBasic.ShareVariable();
+            threadingBasic.BackgroundThread();
         }
     }
 }
